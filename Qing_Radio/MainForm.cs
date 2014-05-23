@@ -7,11 +7,29 @@ using System.Text;
 using System.Windows.Forms;
 //Customized using
 using System.Media;
+using System.Runtime.InteropServices;
 
 namespace Qing_Radio
 {
     public partial class MainForm : Form
     {
+        private bool MouseLocked { get; set; }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left; //最左坐标
+            public int Top; //最上坐标
+            public int Right; //最右坐标
+            public int Bottom; //最下坐标
+        }
 
         public MainForm()
         {
@@ -26,6 +44,19 @@ namespace Qing_Radio
         private void MainForm_Load(object sender, EventArgs e)
         {
             
+        }
+
+        private void MainForm_MouseMove(object sender, EventArgs e)
+        {
+            if (MouseLocked)
+            {
+                IntPtr awin = GetForegroundWindow(); //获取当前窗口句柄
+                RECT rect = new RECT();
+                GetWindowRect(awin, ref rect);
+                int x = rect.Left;
+                int y = rect.Top;
+                Cursor.Position = new Point(x+200, y+200);
+            }
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -51,7 +82,14 @@ namespace Qing_Radio
 
         private void lockButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("功能未实现");
+            if (MouseLocked)
+            {
+                MouseLocked = false;
+            }
+            else
+            {
+                MouseLocked = true;
+            }
         }
 
         private void timerButton_Click(object sender, EventArgs e)

@@ -144,6 +144,7 @@
             // 
             // pauseButton
             // 
+            this.pauseButton.Enabled = false;
             this.pauseButton.Location = new System.Drawing.Point(18, 294);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(445, 33);
@@ -166,9 +167,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(14, 408);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(226, 42);
+            this.label5.Size = new System.Drawing.Size(177, 42);
             this.label5.TabIndex = 12;
-            this.label5.Text = "清_广播室智能控制终端\r\nversion 1, build 0013-rebuild";
+            this.label5.Text = "清_广播室智能控制终端\r\nversion 1, build 0027";
             // 
             // timer
             // 
@@ -247,6 +248,7 @@
             this.Name = "MainForm";
             this.Text = "清_广播室智能控制终端";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
